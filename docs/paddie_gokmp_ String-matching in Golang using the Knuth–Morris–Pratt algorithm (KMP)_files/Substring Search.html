@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0042)http://algs4.cs.princeton.edu/53substring/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="apple-touch-icon" href="http://algs4.cs.princeton.edu/apple-touch-icon.png">
+<link rel="shortcut icon" href="http://algs4.cs.princeton.edu/favicon.ico">
+
+<link rel="stylesheet" href="./Substring Search_files/algs4.css" type="text/css" media="screen">
+
+<meta name="google-site-verification" content="nYspbl5bNBQrNZKguiAAFTMVM7sq2P1WQYc8Oi6Okl0">
+<meta name="msvalidate.01" content="D4B7F6DF793EFF34DE96F611C2A367A5">
+
+<!-- IE HACKS -->
+<!--[if IE]>
+<style type="text/css" media="screen">
+ #menu ul li {float: left; width: 100%;}
+</style>
+<![endif]-->
+<!--[if lt IE 7]>
+<style type="text/css" media="screen">
+body {
+behavior: url(/csshover.htc);
+} 
+#menu ul li {float: left; width: 100%;}
+#menu ul li a {height: 1%;} 
+
+#menu a, #menu h2 {
+font: bold 0.9em/1.5em arial, helvetica, sans-serif;
+} 
+
+</style>
+<![endif]-->
+
+
+
+<title>
+Substring Search</title>
+
+
+<meta name="AUTHOR" content="Robert Sedgewick and Kevin Wayne">
+<meta name="KEYWORDS" content="Substring Search,Algorithms,4th edition,data structures,Java,intro,introduction,Sedgewick,Wayne">
+<meta name="DESCRIPTION" content="The textbook Algorithms, 4th Edition by Robert Sedgewick and Kevin Wayne surveys the most important algorithms and data structures in use today. The broad perspective taken makes it an appropriate introduction to the field.">
+<meta name="TITLE" content="Substring Search. Algorithms, 4th Edition by Robert Sedgewick and Kevin Wayne.">
+<meta name="ROBOTS" content="INDEX,FOLLOW">
+
+<script type="text/javascript" async="" src="http://www.google.com/cse/cse.js?cx=005649317310637734940:s7fqljvxwfs"></script><script async="" src="./Substring Search_files/analytics.js"></script><script type="text/javascript" src="./Substring Search_files/swfobject.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-10811519-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</head>
+
+
+<body>
+
+<div id="menu">
+<div align="center">
+<a class="picture" href="http://algs4.cs.princeton.edu/">
+<img src="./Substring Search_files/cover.png" width="189" height="236" border="0" alt="Algorithms, 4th Edition by Robert Sedgewick and Kevin Wayne">
+</a>  
+</div>
+
+
+
+
+
+<ul>
+  <li><a class="title" href="http://algs4.cs.princeton.edu/">Algorithms, 4th edition</a>
+
+<ul>
+
+
+      <li> <a href="http://algs4.cs.princeton.edu/10fundamentals">1.&nbsp;&nbsp;Fundamentals</a>
+        <ul>
+          <li> <a href="http://algs4.cs.princeton.edu/11model">1.1&nbsp;&nbsp;Programming Model</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/12oop">1.2&nbsp;&nbsp;Data Abstraction</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/13stacks">1.3&nbsp;&nbsp;Stacks and Queues</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/14analysis">1.4&nbsp;&nbsp;Analysis of Algorithms</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/15uf">1.5&nbsp;&nbsp;Case Study: Union-Find</a>
+        </li></ul>
+
+      </li><li> <a href="http://algs4.cs.princeton.edu/20sorting">2.&nbsp;&nbsp;Sorting</a>
+        <ul>
+          <li> <a href="http://algs4.cs.princeton.edu/21elementary">2.1&nbsp;&nbsp;Elementary Sorts</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/22mergesort">2.2&nbsp;&nbsp;Mergesort</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/23quicksort">2.3&nbsp;&nbsp;Quicksort</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/24pq">2.4&nbsp;&nbsp;Priority Queues</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/25applications">2.5&nbsp;&nbsp;Sorting Applications</a>
+        </li></ul>
+
+      </li><li> <a href="http://algs4.cs.princeton.edu/30searching">3.&nbsp;&nbsp;Searching</a>
+        <ul>
+          <li> <a href="http://algs4.cs.princeton.edu/31elementary">3.1&nbsp;&nbsp;Symbol Tables</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/32bst">3.2&nbsp;&nbsp;Binary Search Trees</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/33balanced">3.3&nbsp;&nbsp;Balanced Search Trees</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/34hash">3.4&nbsp;&nbsp;Hash Tables</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/35applications">3.5&nbsp;&nbsp;Searching Applications</a>
+        </li></ul>
+
+      </li><li> <a href="http://algs4.cs.princeton.edu/40graphs">4.&nbsp;&nbsp;Graphs</a>
+        <ul>
+          <li> <a href="http://algs4.cs.princeton.edu/41graph">4.1&nbsp;&nbsp;Undirected Graphs</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/42digraph">4.2&nbsp;&nbsp;Directed Graphs</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/43mst">4.3&nbsp;&nbsp;Minimum Spanning Trees</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/44sp">4.4&nbsp;&nbsp;Shortest Paths</a>
+        </li></ul>
+
+      </li><li> <a href="http://algs4.cs.princeton.edu/50strings">5.&nbsp;&nbsp;Strings</a>
+        <ul>
+          <li> <a href="http://algs4.cs.princeton.edu/51radix">5.1&nbsp;&nbsp;String Sorts</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/52trie">5.2&nbsp;&nbsp;Tries</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/53substring">5.3&nbsp;&nbsp;Substring Search</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/54regexp">5.4&nbsp;&nbsp;Regular Expressions</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/55compression">5.5&nbsp;&nbsp;Data Compression</a>
+        </li></ul>
+
+      </li><li> <a href="http://algs4.cs.princeton.edu/60context">6.&nbsp;&nbsp;Context</a>
+        <ul>
+          <li> <a href="http://algs4.cs.princeton.edu/61event">6.1&nbsp;&nbsp;Event-Driven Simulation</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/62btree">6.2&nbsp;&nbsp;B-trees</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/63suffix">6.3&nbsp;&nbsp;Suffix Arrays</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/64maxflow">6.4&nbsp;&nbsp;Maxflow</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/65reductions">6.5&nbsp;&nbsp;Reductions</a>
+          </li><li> <a href="http://algs4.cs.princeton.edu/66intractability">6.6&nbsp;&nbsp;Intractability</a>
+        </li></ul>
+    </li></ul>
+
+
+
+
+</li><li><a class="title"> Related Booksites</a>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td align="center">
+<a class="booksite" href="http://introcs.cs.princeton.edu/">
+   <img src="./Substring Search_files/cover(1).png" width="80" height="108" border="0" alt="Introduction to Programming in Java
+               by Robert Sedgewick and Kevin Wayne">
+</a>
+</td><td align="center">
+<a class="booksite" href="http://aofa.cs.princeton.edu/">
+   <img src="./Substring Search_files/cover-analysis-of-algorithms.png" width="81" height="108" border="0" alt="An Introduction to the Analysis of Algorithms by Robert Sedgewick and Philippe Flajolet">
+</a>
+</td></tr>
+</tbody></table>
+
+</li><li><a class="title">Web Resources</a>
+
+
+      </li><li> <a href="http://algs4.cs.princeton.edu/faq">FAQ</a>
+      </li><li> <a href="http://introcs.cs.princeton.edu/java/data">Data</a>
+      </li><li> <a href="http://algs4.cs.princeton.edu/code">Code</a>
+      </li><li> <a href="http://algs4.cs.princeton.edu/errata">Errata</a>
+      </li><li> <a href="http://algs4.cs.princeton.edu/cheatsheet">Cheatsheet</a>
+      </li><li> <a href="http://algs4.cs.princeton.edu/references">References</a>
+      </li><li> <a href="https://www.coursera.org/course/algs4partI">Online Course</a>
+      </li><li> <a href="http://algs4.cs.princeton.edu/lectures">Lecture Slides</a>
+      </li><li> <a href="http://introcs.cs.princeton.edu/java/assignments">Programming Assignments</a>
+   </li></ul>
+
+
+
+<p><br>
+
+<script>
+  (function() {
+    var cx = '005649317310637734940:s7fqljvxwfs';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:searchbox-only></gcse:searchbox-only>
+
+</p><p><br>
+
+
+
+
+</p></div>
+
+
+<div id="content">
+<h1>5.3 &nbsp; Substring Search</h1>
+
+<p><br>
+
+<font color="red">
+This section under major construction.       
+</font>
+
+
+Searching in long strings - online.
+
+</p><p>
+<a href="http://www-igm.univ-mlv.fr/~lecroq/string/">This website</a>
+is a great resource for exact string searching algorithms.
+
+</p><p>
+<a href="http://johannburkard.de/software/stringsearch/">High-performance
+pattern matching in Java</a> for general string searching,
+searching with wildcards, and searching with character classes.
+
+</p><p><br>
+
+Program <a href="http://algs4.cs.princeton.edu/53substring/Brute.java.html">Brute.java</a> is
+brute force string search.
+Essentially equivalent to
+ <a href="http://algs4.cs.princeton.edu/53substring/SystemSearch.java.html">SystemSearch.java</a>.
+
+</p><p></p><h2>Rabin-Karp.</h2>
+Program <a href="http://algs4.cs.princeton.edu/53substring/RabinKarp.java.html">RabinKarp.java</a>
+implements the Rabin-Karp randomized fingerprint algorithm.
+
+
+<p></p><h2>Knuth-Morris-Pratt.</h2>
+Program <a href="http://algs4.cs.princeton.edu/53substring/KMP.java.html">KMP.java</a> is
+Knuth-Morris-Pratt algorithm.
+<a href="http://algs4.cs.princeton.edu/53substring/KMPplus.java.html">KMPplus.java</a> is an improved
+version that takes time and space proportional to M + N (independent of
+the alphabet size R).
+
+<p></p><h2>Boyer-Moore.</h2>
+Program <a href="http://algs4.cs.princeton.edu/53substring/BoyerMoore.java.html">BoyerMoore.java</a>
+implements the bad-character rule part of the Boyer-Moore algorithm.
+It does not implement the strong good suffix rule.
+
+
+<p></p><h3>Intrusion detection systems.</h3>
+Need very fast string searching since these are deployed at
+choke points of networks.
+Application
+
+<p><br>
+
+
+
+</p><p>
+</p><h4>Q+A</h4>
+
+
+<p>
+</p><h4>Exercises</h4>
+
+<ol>
+
+
+<li>Design a brute-force substring search algorithm that scans the pattern from
+right to left.
+
+</li><li>Show the trace of the brute-force algorithm in the style of figure XYZ
+for the following pattern and text strings.
+<ul>
+<li> AAAAAAAB; AAAAAAAAAAAAAAAAAAAAAAAAB
+</li><li> ABABABAB; ABABABABAABABABABAAAAAAAA
+</li><li>
+</li><li>
+</li></ul>
+
+</li><li>Determine the KMP DFA for the following pattern strings.
+<ul>
+<li> AAAAAAAB
+</li><li> AACAAAB
+</li><li> ABABABAB
+</li><li> ABAABAAABAAAB
+</li><li> ABAABCABAABCB
+</li></ul>
+
+
+</li><li>Suppose that the pattern and text are random strings over an
+alphabet of size R &gt;= 2. Show that the expected number of character
+compares is (N - M + 1) (1 - R^-M) / (1 - R^-1) &lt;= 2 (N - M + 1).
+
+
+</li><li>Construct an example where the Boyer-Moore algorithm 
+(with only the bad character rule) performls poorly.
+
+
+</li><li>How would you modify Rabin-Karp to search for a given pattern
+with the additional proviso that the middle character is a "wildcard"
+(any text character at all can match it).
+
+</li><li>How would you modify Rabin-Karp to determine whether any of a subset
+of k patterns (say, all of the same length) is in the text?
+<p><em>Solution.</em> Compute the hashes of the k patterns and store
+the hashes in a SET.
+
+</p></li><li>How would you modify Rabin-Karp to search for an M-by-M pattern
+in an N-by-N text? Or some other irregularly-shaped pattern in an
+N-by-N text?
+
+</li><li>Monte Carlo vs. Las Vegas Rabin Karp.
+
+</li><li><b>Online palindrome detection.</b>
+Read in characters one at a time. Report at each instant if the
+current string is a palindrome. <em>Hint</em>: use Karp-Rabin hashing idea.
+
+
+</li><li><b>Tandem repeats.</b>
+A tandem repeat of a base string b within a string s is a substring
+of s consisting of at least one consecutive copy of the base
+string b. Given b and s, design an algorithm to
+find a tandem repeat of b within s of maximum length. 
+The running time should be proportional to M + N, where
+M is the length of b and N is the length of s.
+<p>
+<em>Solution.</em>
+This problem is a generalization of substring search
+(is thereat least one consecutive copy of b within s?)
+so we need an algorithm that generalize ssubstring search. 
+Create the Knuth-Morris-Pratt DFA for k concatenated 
+copies of b, where k = N/M. Now, simulate DFA on input 
+s and record the largest state that it reaches.
+From this, we can identify the longest tandem repeat. 
+
+</p></li><li><b>Suffix-prefix match.</b>
+Design a linear-time algorithm to find the longest suffix of one
+string <em>a</em> that exactly matches a prefix of another string <em>b</em>.
+
+</li><li><b>Cyclic rotation.</b>
+Design a linear-time algorithm to determine whether one string is a 
+cyclic rotation of another. A string <em>a</em> is a cyclic rotation of a
+string <em>b</em> if <em>a</em> and <em>b</em> have the same length
+and <em>a</em> consists of a suffix of <em>b</em> followed by
+a prefix of <em>b</em>.
+
+</li><li><b>Substring of a circular string.</b>
+Design a linear-time algorithm to determine whether one string <em>a</em> is
+a substring of a cirular string <em>b</em>.
+
+
+</li><li><b>Longest palindromic substring.</b>
+Given a string s, find the longest substring that is a palindrome
+(or a Watson-crick palindrome).
+<em>Solution</em>: can be solved in linear time using suffix trees
+or <a href="http://www.leetcode.com/2011/11/longest-palindromic-substring-part-ii.html">Manacher's algorithm</a>.
+Here's a simpler solution that typically runs in linearthmic time.
+First, we describe how to find all palindromic substrings
+of length exactly L in linear time: use Karp-Rabin to iteratively
+form the hashes of each substring of length L (and its reverse),
+and compare.
+Since you don't know L, repeatedly double your guess of L until
+you know the optimal length is between L and 2L. Then use
+binary search to find the exactly length.
+
+<p><em>Solution.</em>
+<a href="http://algs4.cs.princeton.edu/53substring/Manacher.java.html">Manacher.java</a>
+is an implementation of Manacher's algorithm.
+
+</p></li><li><b>Repeated substring.</b> [<a href="http://web.mit.edu/~mip/www/probs.html">
+Mihai Patrascu</a>]
+Given an integer K and a string of length N, find the longest substring which
+appears at least K times.
+
+<p><em>One solution.</em>
+Assume you know the length L of the repeated string.
+Hash each substring of length L, and check if any hash occurs
+K or more times. If so, check to make sure you didn't get unlucky.
+Since you don't know L, repeatedly double your guess of L until
+you know the optimal length is between L and 2L. Then use
+binary search to find the right value.
+
+
+</p></li><li><b>Longest common substring.</b>
+Given two (or three strings), find the longest substring that
+appears in all three.
+<em>Hint</em>: assume you know the length L of the longest common
+substring. Hash each substring of length L and check if any
+hash bucket contains (at least) one entry from each string.
+
+</li><li><b>All matches.</b>
+Modify KMP to find all matches in linear time (instead of leftmost match).
+
+</li><li><b>Fibonacci string.</b>
+Interesting case for KMP.
+F(1) = B, F(2) = A, F(3) = AB, F(4) = ABA, F(5) = ABAAB, F(N) = F(N-1) F(N-2).
+
+</li><li>Suppose that x and y are two strings.
+Design a linear-time algorithm to determine whether x^m = y^n for some
+integers m and n (where x^m means the concatenation of m copies of x).
+<p>
+<em>Solution.</em>
+Suffices to check where xy = yx (this fact is nontrivial - it follows from the Lyndon-Schutzenberger theorem).
+
+</p></li><li><b>Period of a string.</b>
+Let s be a nonempty string. An integer p such that
+s[i] = s[i+p] for all i = 0, 1, ..., N-p-1.
+is called a <em>period</em> of s
+The period of string s is the smallest integer p that is a period of s
+(can be N).
+For example, the period of ABCABCABCABCAB is 3.
+Design a linear-time algorithm to compute the period of a string.
+
+
+</li><li><b>Border of a string.</b>
+Given a nonempty string s, we define string w to be a <em>border</em> of s
+if s = yw = wz for some strings y, z, and w with |y| = |z| = p, i.e.,
+w is a proper substring of s that is both a prefix and a suffix of s.
+The border of a string is the longest proper border of s (can be empty).
+For example, the boder of ABCABCABCABCAB is w = ABCABCAB 
+(with y = ABC, z = CAB, and p = 3).
+Design a linear-time algorithm to compute the border of a string.
+
+</li><li><b>Anagram substring search.</b>
+Given a text string txt[] of length N and a pattern string pat[] of length M,
+determine whether pat[] or any of its anagrams (any of its M! permutations)
+appears in the text.
+
+<p><em>Hint</em>: maintain a histogram of the letter frequencies for
+a given substring of length M in the text.
+
+</p></li></ol>
+
+
+
+<br><br>
+<p class="footer">
+<em>Last modified on August 26, 2016.</em><br><br>
+Copyright © 2000–2016
+<a href="http://www.cs.princeton.edu/~rs" class="footer">Robert Sedgewick</a>
+and
+<a href="http://www.cs.princeton.edu/~wayne" class="footer">Kevin Wayne</a>.
+All rights reserved.
+</p></div>
+
+
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./Substring Search_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-10811519-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+
+
+
+
+ 
+<div class="sogoutip" style="z-index: 2147483645; visibility: hidden; display: none;"></div><div class="sogoubottom" id="sougou_bottom" style="display: none;"></div><div id="ext_stophi" style="z-index: 2147483647;"><div class="extnoticebg"></div><div class="extnotice"><h2>关闭提示 <a href="http://algs4.cs.princeton.edu/53substring/#" title="关闭提示" id="closenotice" class="closenotice">关闭</a></h2><p id="sogouconfirmtxt"></p>  <a id="sogouconfirm" href="http://algs4.cs.princeton.edu/53substring/#" class="extconfirm">确 认</a> <a id="sogoucancel" href="http://algs4.cs.princeton.edu/53substring/#" class="extconfirm">取 消</a></div></div><div id="ext_overlay" class="ext_overlayBG" style="display: none; z-index: 2147483646;"></div><iframe class="sogou_sugg_feedbackquan" frameborder="0" scrolling="no" src="./Substring Search_files/yun6.html" style="border: none; display: none; height: 84px; width: 100%; z-index: 2147483645; background: transparent;"></iframe></body></html>
